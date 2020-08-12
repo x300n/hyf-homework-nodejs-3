@@ -25,12 +25,19 @@ app.post("/user", (req, res) => {
   let user = {
     id: id,
   };
-
   id = id + 1;
-
   users.push(user);
-
   res.status(200).send(user);
+});
+
+app.delete("/user/:id", (req, res) => {
+  let user = users.filter((user) => user.id == req.params.id);
+  if (user.length > 0) {
+    users = users.filter((user) => user.id != req.params.id);
+    res.sendStatus(202);
+  } else {
+    res.sendStatus(204);
+  }
 });
 
 app.listen(port, () => {
